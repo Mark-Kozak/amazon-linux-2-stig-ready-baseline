@@ -31,7 +31,7 @@ control 'AMZL-02-730700' do
   tag subsystems: ['audit', 'auditd', 'audit_rule']
   tag 'host'
 
-  audit_commands = ['/etc/sudoers', '/etc/sudoers.d/']
+  audit_commands = ['/etc/sudoers', '/etc/sudoers.d']
 
   if virtualization.system.eql?('docker')
     impact 0.0
