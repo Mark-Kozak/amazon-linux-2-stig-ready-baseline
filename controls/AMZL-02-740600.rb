@@ -26,11 +26,19 @@ control 'AMZL-02-740600' do
     If the file is mutable and has not been documented with the Information System Security Officer (ISSO), this is a
     finding.)
   desc 'fix', 'Configure the operating system to use two or more name servers for DNS resolution.
-    Edit the "/etc/resolv.conf" file to uncomment or add the two or more "nameserver" option lines with the IP address
-    of local authoritative name servers. If local host resolution is being performed, the "/etc/resolv.conf" file must
-    be empty. An empty "/etc/resolv.conf" file can be created as follows:
+    If running outside the AWS environment (on-prem), edit the "/etc/resolv.conf" file to uncomment or add the two or 
+    more "nameserver" option lines with the IP address of local authoritative name servers. 
+    If local host resolution is being performed, the "/etc/resolv.conf" file must be empty. An empty "/etc/resolv.conf" 
+    file can be created as follows:
     # echo -n > /etc/resolv.conf
-    And then make the file immutable with the following command:
+
+    If running an EC2 Instance in the AWS environment, the "/etc/resolv.conf" is generated at boot time based on settings 
+    in the VPC DHCP Option Set. The default Option Set uses the Route 53 Resolver is located at 169.254.169.253 (IPv4) or
+    fd00:ec2::253 (IPv6). Additional DNS resolvers require the creation of a custom DHCP Option Set. From the VPC Service 
+    page select "DHCP Option Set" under the "Virtual Private Cloud" menue. Once the set has been created, "Edit VPC 
+    Settings" and select the new Option Set.
+    
+    In either case make the file immutable with the following command:
     # chattr +i /etc/resolv.conf
     If the "/etc/resolv.conf" file must be mutable, the required configuration must be documented with the Information
     System Security Officer (ISSO) and the file must be verified by the system file integrity tool.'
