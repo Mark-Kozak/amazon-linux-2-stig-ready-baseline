@@ -84,7 +84,7 @@ control 'AMZL-02-740600' do
   end
 
   describe '/etc/resolv.conf should be immutable -- file attributes' do
-    subject { command('lsattr /etc/resolve.conf').stdout }
+    subject { command('lsattr /etc/resolv.conf').stdout }
     it { should match /i/ }
   end
 end
